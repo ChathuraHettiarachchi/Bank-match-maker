@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Xero Android Exercise 2023"
 include(":app")
- 
+include(":core:design")
