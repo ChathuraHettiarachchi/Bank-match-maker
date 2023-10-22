@@ -24,10 +24,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.xero.interview.design.R
+import com.xero.interview.design.component.indicator.MatchFoundIndicator
 import com.xero.interview.design.component.text.AmountText
 import com.xero.interview.design.component.text.InfoText
 import com.xero.interview.design.component.text.TitleText
 import com.xero.interview.design.component.utils.HSeparator
+import com.xero.interview.design.component.utils.HSpace
 import com.xero.interview.design.component.utils.WSpace
 import com.xero.interview.design.icon.XeroIcons
 import com.xero.interview.design.theme.amountNormalSize
@@ -54,38 +56,49 @@ fun AccountRecordCell(title: String, subTitle: String, amount: Double,isMoneyIn:
             .background(color = whiteColor)
             .padding(defaultMargin)
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .defaultMinSize(minHeight = 60.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+        Column {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .defaultMinSize(minHeight = 60.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
 
-        ) {
-            Row {
-                Box(
-                    modifier = Modifier
-                        .size(46.dp)
-                        .clip(CircleShape)
-                        .background(color = color),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon( icon , contentDescription = title, tint = whiteColor)
+            ) {
+                Row {
+                    Box(
+                        modifier = Modifier
+                            .size(46.dp)
+                            .clip(CircleShape)
+                            .background(color = color),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon( icon , contentDescription = title, tint = whiteColor)
+                    }
+                    WSpace(halfMargin)
+                    Column(
+
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        TitleText(text = title, style = titleText.copy(color = blackColor))
+                        InfoText(text = subTitle)
+                    }
                 }
-                WSpace(halfMargin)
-                Column(
-
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    TitleText(text = title, style = titleText.copy(color = blackColor))
-                    InfoText(text = subTitle)
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    WSpace()
+                    AmountText(amount = amount, style = amountText)
                 }
             }
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                WSpace()
-                AmountText(amount = amount, style = amountText)
+            if(matchedRecord != null) {
+                HSpace()
+                MatchFoundIndicator(
+                    title = title,
+                    subTitle = subTitle,
+                    amount = amount,
+                    type = "N/A",
+                    isFullUI = true
+                )
             }
-
         }
     }
 }
@@ -100,4 +113,10 @@ fun PreviewAccountRecordInCell() {
 @Composable
 fun PreviewAccountRecordOutCell() {
     AccountRecordCell(title = "Title", subTitle = "Sub title", amount = 12341212.12, isMoneyIn = false)
+}
+
+@Preview
+@Composable
+fun PreviewAccountRecordOutWithIndicatorCell() {
+    AccountRecordCell(title = "Title", subTitle = "Sub title", amount = 12341212.12, isMoneyIn = false, matchedRecord = "a")
 }

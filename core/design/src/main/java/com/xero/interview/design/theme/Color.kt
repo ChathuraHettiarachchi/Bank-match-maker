@@ -19,5 +19,6 @@ val primary800 = Color(0xFF212C79)
 val primary900 = Color(0xFF111650)
 
 val greenColor = Color(0xFF016B05)
+val lightGreenColor = Color(0xFFA7FFAA)
 val moneyInColor = Color(0xFF6198BD)
 val moneyOutColor = Color(0xFFBB4848)

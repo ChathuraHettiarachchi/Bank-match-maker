@@ -4,8 +4,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AccountBox
 import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.ArrowForward
+import androidx.compose.ui.graphics.vector.ImageVector
 
-object XeroIcons{
+object XeroIcons {
     val Back = Icons.Outlined.ArrowBack
     val Bank = Icons.Outlined.AccountBox
 
