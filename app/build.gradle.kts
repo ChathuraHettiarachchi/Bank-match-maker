@@ -56,6 +56,7 @@ dependencies {
     implementation(project(":feature:find-matches"))
     implementation(project(":feature:account-records"))
     implementation(project(":core:navigation"))
+    implementation(project(":core:design"))
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")

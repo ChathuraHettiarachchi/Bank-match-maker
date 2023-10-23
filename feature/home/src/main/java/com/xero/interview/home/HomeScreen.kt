@@ -78,7 +78,7 @@ fun HomeScreen(
                         HSpace(halfMargin)
                         LazyColumn(
                             modifier = Modifier
-                                .fillMaxWidth(),
+                                .weight(1f),
                             verticalArrangement = Arrangement.spacedBy(
                                 1.dp
                             )
