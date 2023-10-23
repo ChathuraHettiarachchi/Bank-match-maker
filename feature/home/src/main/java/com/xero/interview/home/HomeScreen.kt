@@ -12,6 +12,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -43,6 +45,8 @@ fun HomeScreen(
     viewModel: HomeViewModel
 ) {
     val scrollState = rememberScrollState()
+    val totalAmount by viewModel.totalAmount.collectAsState()
+    val bankAccounts by viewModel.bankAccounts.collectAsState()
 
     fun navigateToRecords(id: Long) {
         navigateToAccountRecords(id)
@@ -62,7 +66,7 @@ fun HomeScreen(
                 AccountSummary(
                     title = "All accounts",
                     subTitle = "-- last updated on 12 Dec 2023 --",
-                    amount = 19234.23
+                    amount = totalAmount
                 )
                 HSpace(defaultMargin)
                 Card() {
@@ -83,7 +87,7 @@ fun HomeScreen(
                                 1.dp
                             )
                         ) {
-                            items(tempAccounts) { account ->
+                            items(bankAccounts) { account ->
                                 BankAccountCell(
                                     account = account,
                                     infoText = "This is a testing",
@@ -107,5 +111,5 @@ val tempAccounts = listOf<BankAccount>(
 @Preview
 @Composable
 fun PreviewHomeScreen() {
-    HomeScreen(navigateToAccountRecords = {}, viewModel = HomeViewModel())
+    HomeScreen(navigateToAccountRecords = {}, viewModel = hiltViewModel())
 }

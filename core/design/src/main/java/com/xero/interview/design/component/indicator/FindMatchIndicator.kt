@@ -10,6 +10,8 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.xero.interview.design.theme.greenColor
+import com.xero.interview.design.theme.moneyOutColor
+import com.xero.interview.design.theme.primary900
 
 @Composable
 fun FindMatchIndicator() {
@@ -24,7 +26,7 @@ fun FindMatchIndicator() {
 
         drawPath(
             path = path,
-            brush = SolidColor(greenColor)
+            brush = SolidColor(moneyOutColor)
         )
     }
 }

@@ -9,7 +9,7 @@ object Constant {
     val bankAccounts = listOf<BankAccount>(
         BankAccount(100, 1, "Amana Bank NZ", -10000.00, -20000.00),
         BankAccount(200, 2, "Common Wealth Bank", 6850.00, 6850.00),
-        BankAccount(300, 3, "Bank of Ceylon", 92345.12, 92345.00),
+        BankAccount(300, 3, "Bank of Ceylon", 92345.12, 92345.12),
     )
 
     val accountRecords = listOf<AccountRecord>(

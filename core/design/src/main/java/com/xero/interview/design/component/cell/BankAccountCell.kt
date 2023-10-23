@@ -48,13 +48,12 @@ fun BankAccountCell(
     infoText: String,
     onClick: (Long) -> Unit = {}
 ) {
-    Box {
+    Box(modifier = Modifier.clickable { onClick(account.id) }) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(color = whiteColor)
-                .padding(defaultMargin)
-                .clickable { onClick(account.id) },
+                .padding(defaultMargin),
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {
                 Row(
@@ -69,14 +68,14 @@ fun BankAccountCell(
                             .background(greenColor),
                         contentAlignment = Alignment.Center
                     ) {
-//                            Image(
-//                                painter = painterResource(id = account.icon),
-//                                contentScale = ContentScale.Crop,
-//                                contentDescription = "",
-//                                modifier = Modifier
-//                                    .fillMaxSize()
-//                                    .clip(CircleShape)
-//                            )
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_003),
+                            contentScale = ContentScale.Crop,
+                            contentDescription = "",
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .clip(CircleShape)
+                        )
                     }
                     WSpace(defaultMargin)
                     Column(
@@ -121,5 +120,13 @@ fun BankAccountCell(
 @Preview
 @Composable
 fun PreviewBankAccount() {
-    BankAccountCell(account = BankAccount(0, R.drawable.ic_001, "Amana Bank NZ", 92345.12, 23425.00), infoText="Test subTitle")
+    BankAccountCell(
+        account = BankAccount(
+            0,
+            R.drawable.ic_001,
+            "Amana Bank NZ",
+            92345.12,
+            23425.00
+        ), infoText = "Test subTitle"
+    )
 }
