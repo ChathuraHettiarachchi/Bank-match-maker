@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface AccountRecordDao {
     @Query("SELECT * FROM AccountRecord WHERE bankAccountId = :bankAccountId")
-    suspend fun allRecords(bankAccountId: Long): Flow<List<AccountRecord>>
+    fun allRecords(bankAccountId: Long): Flow<List<AccountRecord>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRecord(record: AccountRecord): Long
