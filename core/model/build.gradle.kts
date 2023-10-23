@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.xero.interview.data"
+    namespace = "com.xero.interview.model"
     compileSdk = 33
 
     defaultConfig {

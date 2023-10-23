@@ -17,4 +17,4 @@ rootProject.name = "Xero Android Exercise 2023"
 include(":app")
 include(":core:design")
 include(":core:utils")
-include(":core:data")
+include(":core:database")
