@@ -45,7 +45,13 @@ import com.xero.interview.design.theme.titleText
 import com.xero.interview.design.theme.whiteColor
 
 @Composable
-fun AccountRecordCell(title: String, subTitle: String, amount: Double,isMoneyIn: Boolean, matchedRecord: Any? = null) {
+fun AccountRecordCell(
+    title: String,
+    subTitle: String,
+    amount: Double,
+    isMoneyIn: Boolean,
+    matchedRecord: Any? = null,
+    onClick: (id: Long) -> Unit = {}) {
     val color = if(isMoneyIn) moneyInColor else moneyOutColor
     val icon = if(isMoneyIn) XeroIcons.In else XeroIcons.Out
 
@@ -77,7 +83,6 @@ fun AccountRecordCell(title: String, subTitle: String, amount: Double,isMoneyIn:
                     }
                     WSpace(halfMargin)
                     Column(
-
                         verticalArrangement = Arrangement.Center
                     ) {
                         TitleText(text = title, style = titleText.copy(color = blackColor))

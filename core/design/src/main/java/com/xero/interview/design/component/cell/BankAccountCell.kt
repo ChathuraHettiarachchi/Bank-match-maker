@@ -44,7 +44,8 @@ fun BankAccountCell(
     amountLeft: Double,
     amountRight: Double,
     icon: Int,
-    isFindMatchNeeded: Boolean = false
+    isFindMatchNeeded: Boolean = false,
+    onClick: (id: Long) -> Unit = {}
 ) {
     Box {
         Column {
@@ -113,7 +114,7 @@ fun BankAccountCell(
             }
             WSeparator()
         }
-        if(isFindMatchNeeded)
+        if (isFindMatchNeeded)
             FindMatchIndicator()
     }
 }
