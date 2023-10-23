@@ -8,7 +8,8 @@ data class AccountRecord(
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0,
     var name: String,
-    var data: String,
+    var date: String,
     var amount: Double,
+    var isMoneyIn: Boolean = false,
     var bankAccountId: Long
 )

@@ -30,6 +30,7 @@ import com.xero.interview.design.component.text.InfoText
 import com.xero.interview.design.component.text.TitleText
 import com.xero.interview.design.component.utils.HSeparator
 import com.xero.interview.design.component.utils.HSpace
+import com.xero.interview.design.component.utils.WSeparator
 import com.xero.interview.design.component.utils.WSpace
 import com.xero.interview.design.icon.XeroIcons
 import com.xero.interview.design.theme.amountNormalSize
@@ -51,18 +52,19 @@ fun AccountRecordCell(
     amount: Double,
     isMoneyIn: Boolean,
     matchedRecord: Any? = null,
-    onClick: (id: Long) -> Unit = {}) {
-    val color = if(isMoneyIn) moneyInColor else moneyOutColor
-    val icon = if(isMoneyIn) XeroIcons.In else XeroIcons.Out
+    onClick: (Long) -> Unit = {}
+) {
+    val color = if (isMoneyIn) moneyInColor else moneyOutColor
+    val icon = if (isMoneyIn) XeroIcons.In else XeroIcons.Out
 
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .background(color = whiteColor)
-            .padding(defaultMargin)
-    ) {
-        Column {
+    Column {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .background(color = whiteColor)
+                .padding(defaultMargin)
+        ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -79,7 +81,7 @@ fun AccountRecordCell(
                             .background(color = color),
                         contentAlignment = Alignment.Center
                     ) {
-                        Icon( icon , contentDescription = title, tint = whiteColor)
+                        Icon(icon, contentDescription = title, tint = whiteColor)
                     }
                     WSpace(halfMargin)
                     Column(
@@ -94,7 +96,7 @@ fun AccountRecordCell(
                     AmountText(amount = amount, style = amountText)
                 }
             }
-            if(matchedRecord != null) {
+            if (matchedRecord != null) {
                 HSpace()
                 MatchFoundIndicator(
                     title = title,
@@ -105,23 +107,41 @@ fun AccountRecordCell(
                 )
             }
         }
+        WSeparator()
     }
+
 }
 
 @Preview
 @Composable
 fun PreviewAccountRecordInCell() {
-    AccountRecordCell(title = "Title", subTitle = "Sub title", amount = 12341212.12, isMoneyIn = true)
+    AccountRecordCell(
+        title = "Title",
+        subTitle = "Sub title",
+        amount = 12341212.12,
+        isMoneyIn = true
+    )
 }
 
 @Preview
 @Composable
 fun PreviewAccountRecordOutCell() {
-    AccountRecordCell(title = "Title", subTitle = "Sub title", amount = 12341212.12, isMoneyIn = false)
+    AccountRecordCell(
+        title = "Title",
+        subTitle = "Sub title",
+        amount = 12341212.12,
+        isMoneyIn = false
+    )
 }
 
 @Preview
 @Composable
 fun PreviewAccountRecordOutWithIndicatorCell() {
-    AccountRecordCell(title = "Title", subTitle = "Sub title", amount = 12341212.12, isMoneyIn = false, matchedRecord = "a")
+    AccountRecordCell(
+        title = "Title",
+        subTitle = "Sub title",
+        amount = 12341212.12,
+        isMoneyIn = false,
+        matchedRecord = "a"
+    )
 }

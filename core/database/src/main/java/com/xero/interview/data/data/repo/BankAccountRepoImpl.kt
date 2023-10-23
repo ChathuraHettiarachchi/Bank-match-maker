@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class BankAccountRepoImpl @Inject constructor(private val dao: BankAccountDao) : BankAccountRepo {
-    override suspend fun allBankAccounts(): Flow<List<BankAccount>> {
+    override fun allBankAccounts(): Flow<List<BankAccount>> {
         return dao.allBankAccounts()
     }
 

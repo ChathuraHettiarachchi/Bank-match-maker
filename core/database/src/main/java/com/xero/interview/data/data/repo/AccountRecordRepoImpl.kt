@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class AccountRecordRepoImpl @Inject constructor(private val dao: AccountRecordDao) :
     AccountRecordRepo {
-    override suspend fun allRecords(bankAccountId: Long): Flow<List<AccountRecord>> {
+    override fun allRecords(bankAccountId: Long): Flow<List<AccountRecord>> {
         return dao.allRecords(bankAccountId)
     }
 
