@@ -24,11 +24,20 @@ fun AccountRecordRoute(
     onBackClick: () -> Unit,
     navigateToFindMatches: (Long, Long) -> Unit
 ) {
-    val bankAccount = BankAccount((0..999).random().toLong(), 1, "Amana Bank NZ", 92345.12, 23425.00)
+    val bankAccount =
+        BankAccount((0..999).random().toLong(), 1, "Amana Bank NZ", 92345.12, 23425.00)
     val data: MutableList<AccountRecord> = mutableListOf();
 
     repeat((0..10).count()) {
-        data.add(AccountRecord((0..999).random().toLong(), "Test name", "12 Dec 2023", 50012.23, false, bankAccountId))
+        data.add(
+            AccountRecord(
+                (0..999).random().toLong(),
+                "Test name",
+                "12 Dec 2023",
+                50012.23,
+                bankAccountId
+            )
+        )
     }
 
     AccountRecordScreen(

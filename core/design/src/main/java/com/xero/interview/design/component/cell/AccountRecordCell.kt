@@ -43,8 +43,8 @@ fun AccountRecordCell(
     matchedRecord: Any? = null,
     onClick: (Long, Long) -> Unit = { p1, p2 -> }
 ) {
-    val color = if (record.isMoneyIn) moneyInColor else moneyOutColor
-    val icon = if (record.isMoneyIn) XeroIcons.In else XeroIcons.Out
+    val color = if (record.amount > 0) moneyInColor else moneyOutColor
+    val icon = if (record.amount > 0) XeroIcons.In else XeroIcons.Out
 
     Column {
         Column(
@@ -107,7 +107,7 @@ fun AccountRecordCell(
 @Composable
 fun PreviewAccountRecordInCell() {
     val data =
-        AccountRecord((0..999).random().toLong(), "Test name", "12 Dec 2023", 50012.23, false, 12)
+        AccountRecord((0..999).random().toLong(), "Test name", "12 Dec 2023", 50012.23, 12)
     AccountRecordCell(
         record = data
     )
@@ -117,7 +117,7 @@ fun PreviewAccountRecordInCell() {
 @Composable
 fun PreviewAccountRecordOutCell() {
     val data =
-        AccountRecord((0..999).random().toLong(), "Test name", "12 Dec 2023", 50012.23, false, 12)
+        AccountRecord((0..999).random().toLong(), "Test name", "12 Dec 2023", 50012.23, 12)
     AccountRecordCell(
         record = data
     )
@@ -127,7 +127,7 @@ fun PreviewAccountRecordOutCell() {
 @Composable
 fun PreviewAccountRecordOutWithIndicatorCell() {
     val data =
-        AccountRecord((0..999).random().toLong(), "Test name", "12 Dec 2023", 50012.23, false, 12)
+        AccountRecord((0..999).random().toLong(), "Test name", "12 Dec 2023", 50012.23, 12)
     AccountRecordCell(
         record = data,
         matchedRecord = "a"

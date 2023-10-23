@@ -24,7 +24,7 @@ import com.xero.interview.find_matches.viewmodel.FindMatchViewModel
 fun FindMatchRoute(
     bankAccountId: Long, accountId: Long, onBackClick: () -> Unit
 ) {
-    val acc = AccountRecord(accountId, "Test name", "12 Dec 2023", 50012.23, false, bankAccountId)
+    val acc = AccountRecord(accountId, "Test name", "12 Dec 2023", 50012.23, bankAccountId)
     val data: MutableList<TransactionRecord> = mutableListOf();
     repeat((0..10).count()) {
         data.add(
