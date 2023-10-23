@@ -1,31 +1,27 @@
 package com.xero.interview.account_records
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.xero.interview.account_records.viewmodel.AccountRecordViewModel
 import com.xero.interview.data.domain.model.AccountRecord
 import com.xero.interview.data.domain.model.BankAccount
 import com.xero.interview.design.component.actionbar.ActionAppBar
 import com.xero.interview.design.component.cell.AccountRecordCell
-import com.xero.interview.design.theme.defaultMargin
 
 @Composable
 fun AccountRecordRoute(
     bankAccountId: Long,
     onBackClick: () -> Unit,
-    navigateToFindMatches: (Long) -> Unit
+    navigateToFindMatches: (Long, Long) -> Unit
 ) {
     val bankAccount = BankAccount(0, 1, "Amana Bank NZ", 92345.12, 23425.00)
     val data: MutableList<AccountRecord> = mutableListOf();
@@ -48,7 +44,7 @@ fun AccountRecordScreen(
     data: List<AccountRecord>,
     viewModel: AccountRecordViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-    navigateToFindMatches: (Long) -> Unit
+    navigateToFindMatches: (Long, Long) -> Unit
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -85,5 +81,5 @@ fun AccountRecordScreen(
 @Preview
 @Composable
 fun PreviewAccountRecordScreen() {
-    AccountRecordRoute(1, {}, {})
+    AccountRecordRoute(1, {}, { p1, p2 -> })
 }

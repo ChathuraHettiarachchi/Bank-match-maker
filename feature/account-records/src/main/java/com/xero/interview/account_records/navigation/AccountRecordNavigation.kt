@@ -21,7 +21,7 @@ fun NavController.navigateToAccountRecord(bankAccountId: String) {
 
 fun NavGraphBuilder.accountRecordGraph(
     onBack: () -> Unit,
-    navigateToFindMatches: (Long) -> Unit
+    navigateToFindMatches: (Long, Long) -> Unit
 ) {
     composable(
         route = AccountRecordDestination.route,

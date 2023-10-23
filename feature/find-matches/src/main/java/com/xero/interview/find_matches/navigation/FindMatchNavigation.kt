@@ -20,9 +20,8 @@ fun NavController.navigateToFindMatch(bankAccountId: String, accountId: String) 
     this.navigate("${Screen.TransactionRecord.route}/$bankAccountId/$accountId")
 }
 
-fun NavGraphBuilder.accountRecordGraph(
-    onBack: () -> Unit,
-    navigateToFindMatches: (Long) -> Unit
+fun NavGraphBuilder.findMatchGraph(
+    onBack: () -> Unit
 ) {
     composable(
         route = FindMatchDestination.route,
