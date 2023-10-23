@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="matches">Select matches :\u0020</string>
+    <string name="matches_to_match">to match</string>
+    <string name="matched_transaction">Matched bank transaction</string>
+    <string name="xero_balance">Xero s Balance</string>
+    <string name="statement_balance">Statement s Balance</string>
+</resources>
