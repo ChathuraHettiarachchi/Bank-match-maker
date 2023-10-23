@@ -99,9 +99,9 @@ fun HomeScreen(
 }
 
 val tempAccounts = listOf<BankAccount>(
-    BankAccount(0, 1, "Amana Bank NZ", 92345.12, 23425.00),
-    BankAccount(0, 1, "Amana Bank NZ", 92345.12, 92345.12),
-    BankAccount(0, 1, "Amana Bank NZ", 92345.12, 23425.00)
+    BankAccount(12, 1, "Amana Bank NZ", 92345.12, 23425.00),
+    BankAccount(22, 1, "Amana Bank NZ", 92345.12, 92345.12),
+    BankAccount(424, 1, "Amana Bank NZ", 92345.12, 23425.00)
 )
 
 @Preview

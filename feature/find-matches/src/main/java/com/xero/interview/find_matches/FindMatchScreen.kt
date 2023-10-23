@@ -1,5 +1,6 @@
 package com.xero.interview.find_matches
 
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,7 +17,6 @@ import com.xero.interview.data.domain.model.AccountRecord
 import com.xero.interview.data.domain.model.TransactionRecord
 import com.xero.interview.design.component.actionbar.ActionAppBar
 import com.xero.interview.design.component.cell.TransactionCell
-import com.xero.interview.design.component.indicator.FindMatchIndicator
 import com.xero.interview.design.component.indicator.MatchesIndicator
 import com.xero.interview.find_matches.viewmodel.FindMatchViewModel
 
@@ -29,12 +29,20 @@ fun FindMatchRoute(
     repeat((0..10).count()) {
         data.add(
             TransactionRecord(
-                0, "Test name", "12 Dec 2023", "Payment", 1234.12, accountId, bankAccountId
+                (0..999).random().toLong(),
+                "Test name",
+                "12 Dec 2023",
+                "Payment",
+                1234.12,
+                accountId,
+                bankAccountId
             )
         )
     }
 
     FindMatchScreen(bankAccountId, acc, data, onBackClick = onBackClick)
+    Log.e("--->", bankAccountId.toString())
+    Log.e("--->", accountId.toString())
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -77,6 +85,6 @@ fun FindMatchScreen(
 
 @Preview
 @Composable
-fun PreviewFindMatchScreen(){
-    FindMatchRoute(1,1,{})
+fun PreviewFindMatchScreen() {
+    FindMatchRoute(1, 1, {})
 }

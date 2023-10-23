@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.xero.interview.data.domain.model.AccountRecord
 import com.xero.interview.design.component.indicator.MatchFoundIndicator
 import com.xero.interview.design.component.text.AmountText
 import com.xero.interview.design.component.text.InfoText
@@ -38,15 +39,12 @@ import com.xero.interview.design.theme.whiteColor
 
 @Composable
 fun AccountRecordCell(
-    title: String,
-    subTitle: String,
-    amount: Double,
-    isMoneyIn: Boolean,
+    record: AccountRecord,
     matchedRecord: Any? = null,
-    onClick: (Long, Long) -> Unit = {p1,p2 -> }
+    onClick: (Long, Long) -> Unit = { p1, p2 -> }
 ) {
-    val color = if (isMoneyIn) moneyInColor else moneyOutColor
-    val icon = if (isMoneyIn) XeroIcons.In else XeroIcons.Out
+    val color = if (record.isMoneyIn) moneyInColor else moneyOutColor
+    val icon = if (record.isMoneyIn) XeroIcons.In else XeroIcons.Out
 
     Column {
         Column(
@@ -55,7 +53,8 @@ fun AccountRecordCell(
                 .wrapContentHeight()
                 .background(color = whiteColor)
                 .padding(defaultMargin)
-                .clickable { onClick(1,1) }
+                .clickable { onClick(record.bankAccountId, record.id) }
+            //TODO
         ) {
             Row(
                 modifier = Modifier
@@ -73,27 +72,27 @@ fun AccountRecordCell(
                             .background(color = color),
                         contentAlignment = Alignment.Center
                     ) {
-                        Icon(icon, contentDescription = title, tint = whiteColor)
+                        Icon(icon, contentDescription = record.name, tint = whiteColor)
                     }
                     WSpace(halfMargin)
                     Column(
                         verticalArrangement = Arrangement.Center
                     ) {
-                        TitleText(text = title, style = titleText.copy(color = blackColor))
-                        InfoText(text = subTitle)
+                        TitleText(text = record.name, style = titleText.copy(color = blackColor))
+                        InfoText(text = record.date)
                     }
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     WSpace()
-                    AmountText(amount = amount, style = amountText)
+                    AmountText(amount = record.amount, style = amountText)
                 }
             }
             if (matchedRecord != null) {
                 HSpace()
                 MatchFoundIndicator(
-                    title = title,
-                    subTitle = subTitle,
-                    amount = amount,
+                    title = record.name,
+                    subTitle = record.date,
+                    amount = record.amount,
                     type = "N/A",
                     isFullUI = true
                 )
@@ -107,33 +106,30 @@ fun AccountRecordCell(
 @Preview
 @Composable
 fun PreviewAccountRecordInCell() {
+    val data =
+        AccountRecord((0..999).random().toLong(), "Test name", "12 Dec 2023", 50012.23, false, 12)
     AccountRecordCell(
-        title = "Title",
-        subTitle = "Sub title",
-        amount = 12341212.12,
-        isMoneyIn = true
+        record = data
     )
 }
 
 @Preview
 @Composable
 fun PreviewAccountRecordOutCell() {
+    val data =
+        AccountRecord((0..999).random().toLong(), "Test name", "12 Dec 2023", 50012.23, false, 12)
     AccountRecordCell(
-        title = "Title",
-        subTitle = "Sub title",
-        amount = 12341212.12,
-        isMoneyIn = false
+        record = data
     )
 }
 
 @Preview
 @Composable
 fun PreviewAccountRecordOutWithIndicatorCell() {
+    val data =
+        AccountRecord((0..999).random().toLong(), "Test name", "12 Dec 2023", 50012.23, false, 12)
     AccountRecordCell(
-        title = "Title",
-        subTitle = "Sub title",
-        amount = 12341212.12,
-        isMoneyIn = false,
+        record = data,
         matchedRecord = "a"
     )
 }

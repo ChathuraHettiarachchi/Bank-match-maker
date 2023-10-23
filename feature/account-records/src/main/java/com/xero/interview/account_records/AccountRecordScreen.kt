@@ -1,5 +1,6 @@
 package com.xero.interview.account_records
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,11 +24,11 @@ fun AccountRecordRoute(
     onBackClick: () -> Unit,
     navigateToFindMatches: (Long, Long) -> Unit
 ) {
-    val bankAccount = BankAccount(0, 1, "Amana Bank NZ", 92345.12, 23425.00)
+    val bankAccount = BankAccount((0..999).random().toLong(), 1, "Amana Bank NZ", 92345.12, 23425.00)
     val data: MutableList<AccountRecord> = mutableListOf();
 
     repeat((0..10).count()) {
-        data.add(AccountRecord(0, "Test name", "12 Dec 2023", 50012.23, false, bankAccountId))
+        data.add(AccountRecord((0..999).random().toLong(), "Test name", "12 Dec 2023", 50012.23, false, bankAccountId))
     }
 
     AccountRecordScreen(
@@ -36,6 +37,8 @@ fun AccountRecordRoute(
         onBackClick = onBackClick,
         navigateToFindMatches = navigateToFindMatches
     )
+
+    Log.e("--->", bankAccountId.toString())
 }
 
 @Composable
@@ -65,10 +68,7 @@ fun AccountRecordScreen(
                 ) {
                     items(data) { record ->
                         AccountRecordCell(
-                            title = record.name,
-                            subTitle = record.date,
-                            amount = record.amount,
-                            isMoneyIn = record.isMoneyIn,
+                            record = record,
                             onClick = navigateToFindMatches
                         )
                     }
