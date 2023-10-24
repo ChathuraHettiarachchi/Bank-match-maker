@@ -7,13 +7,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -38,16 +35,24 @@ fun FindMatchScreen(
     viewModel: FindMatchViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
 ) {
-    val snackbarHostState = remember { SnackbarHostState() }
-    val coroutineScope = rememberCoroutineScope()
-
     val account by viewModel.account.collectAsState()
     val data by viewModel.records.collectAsState()
     val amountToMatch by viewModel.amountToMatch.collectAsState()
     val errorData by viewModel.errorData.collectAsState()
 
+//    DisposableEffect() {
+//        onDispose {
+//            viewModel.updateDbRecords()
+//        }
+//    }
+
     fun onCellClick(record: TransactionRecord, isChecked: Boolean) {
         viewModel.selectTransaction(record, isChecked)
+    }
+
+    fun onBackClickTrigger() {
+        viewModel.updateDbRecords()
+        onBackClick.invoke()
     }
 
     Surface(
@@ -58,7 +63,7 @@ fun FindMatchScreen(
             ActionAppBar(
                 text = "Find matches",
                 subTitle = account?.name,
-                onNavigationClick = onBackClick
+                onNavigationClick = ::onBackClickTrigger
             )
             Column(
                 modifier = Modifier
@@ -82,7 +87,7 @@ fun FindMatchScreen(
                 }
             }
             if (errorData.isError) {
-                
+
             }
         }
     }

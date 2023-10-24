@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface AccountRecordDao {
-    @Query("SELECT * FROM AccountRecord WHERE bankAccountId = :bankAccountId")
+    @Query("SELECT * FROM AccountRecord WHERE bankAccountId = :bankAccountId AND isMatched = 0")
     fun allRecords(bankAccountId: Long): Flow<List<AccountRecord>>
 
     @Query("SELECT COUNT(id) FROM AccountRecord WHERE bankAccountId = :bankAccountId AND isMatched = 0")

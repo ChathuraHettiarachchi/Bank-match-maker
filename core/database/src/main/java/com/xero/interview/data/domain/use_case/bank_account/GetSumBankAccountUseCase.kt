@@ -5,6 +5,6 @@ import javax.inject.Inject
 
 class GetSumBankAccountUseCase @Inject constructor(private val repo: BankAccountRepo) {
     suspend operator fun invoke(): Double {
-        return repo.getSum()
+        return repo.getSum() ?: 0.0
     }
 }
