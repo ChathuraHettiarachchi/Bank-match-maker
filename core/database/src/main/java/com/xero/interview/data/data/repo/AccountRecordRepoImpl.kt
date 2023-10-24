@@ -16,6 +16,10 @@ class AccountRecordRepoImpl @Inject constructor(private val dao: AccountRecordDa
         return dao.findAccountRecord(id)
     }
 
+    override suspend fun countRecords(bankAccountId: Long): Int {
+        return dao.countRecords(bankAccountId)
+    }
+
     override suspend fun insertRecord(record: AccountRecord): Long {
         return dao.insertRecord(record)
     }

@@ -32,16 +32,15 @@ import com.xero.interview.home.viewmodel.HomeViewModel
 
 @Composable
 fun HomeRoute(
-    navigateToAccountRecords: (Long) -> Unit,
-    viewModel: HomeViewModel = hiltViewModel()
+    navigateToAccountRecords: (Long) -> Unit
 ) {
-    HomeScreen(navigateToAccountRecords, viewModel)
+    HomeScreen(navigateToAccountRecords)
 }
 
 @Composable
 fun HomeScreen(
     navigateToAccountRecords: (Long) -> Unit,
-    viewModel: HomeViewModel
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
     val scrollState = rememberScrollState()
     val totalAmount by viewModel.totalAmount.collectAsState()
@@ -86,10 +85,10 @@ fun HomeScreen(
                                 1.dp
                             )
                         ) {
-                            items(bankAccounts) { account ->
+                            items(bankAccounts) { data ->
                                 BankAccountCell(
-                                    account = account,
-                                    infoText = "This is a testing",
+                                    account = data.bankAccount,
+                                    infoText = data.accountRecordCount,
                                     onClick = { navigateToRecords(it) }
                                 )
                             }

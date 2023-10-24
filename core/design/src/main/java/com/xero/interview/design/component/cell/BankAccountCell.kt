@@ -39,15 +39,20 @@ import com.xero.interview.design.theme.defaultMargin
 import com.xero.interview.design.theme.greenColor
 import com.xero.interview.design.theme.halfRadius
 import com.xero.interview.design.theme.infoText
+import com.xero.interview.design.theme.moneyOutColor
+import com.xero.interview.design.theme.subTitleText
 import com.xero.interview.design.theme.titleText
 import com.xero.interview.design.theme.whiteColor
 
 @Composable
 fun BankAccountCell(
     account: BankAccount,
-    infoText: String,
+    infoText: Int = 0,
     onClick: (Long) -> Unit = {}
 ) {
+    val _infoText =
+        if (infoText > 0) "$infoText transactions to match" else "All transactions matched"
+
     Box(modifier = Modifier.clickable { onClick(account.id) }) {
         Box(
             modifier = Modifier
@@ -83,7 +88,9 @@ fun BankAccountCell(
                         verticalArrangement = Arrangement.Center
                     ) {
                         TitleText(text = account.name, style = titleText.copy(color = blackColor))
-                        InfoText(text = infoText)
+                        InfoText(text = _infoText, style = subTitleText.copy(
+                            color = if(infoText>0) moneyOutColor else greenColor
+                        ))
                     }
                 }
                 HSpace(defaultMargin)
@@ -112,7 +119,7 @@ fun BankAccountCell(
                 }
             }
         }
-        if (account.appBalance != account.statementBalance)
+        if (infoText>0)
             FindMatchIndicator()
     }
 }
@@ -128,6 +135,6 @@ fun PreviewBankAccount() {
             92345.12,
             23425.00,
             "20 Oct 2023"
-        ), infoText = "Test subTitle"
+        )
     )
 }

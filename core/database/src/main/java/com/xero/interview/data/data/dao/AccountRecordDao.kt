@@ -13,6 +13,9 @@ interface AccountRecordDao {
     @Query("SELECT * FROM AccountRecord WHERE bankAccountId = :bankAccountId")
     fun allRecords(bankAccountId: Long): Flow<List<AccountRecord>>
 
+    @Query("SELECT COUNT(id) FROM AccountRecord WHERE bankAccountId = :bankAccountId AND isMatched = 0")
+    suspend fun countRecords(bankAccountId: Long): Int
+
     @Query("SELECT * FROM AccountRecord WHERE id = :id LIMIT 1")
     fun findAccountRecord(id: Long): AccountRecord
 

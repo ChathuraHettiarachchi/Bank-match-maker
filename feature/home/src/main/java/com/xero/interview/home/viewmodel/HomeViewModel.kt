@@ -2,7 +2,8 @@ package com.xero.interview.home.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.xero.interview.data.domain.model.BankAccount
+import com.xero.interview.common.models.BankAccountModel
+import com.xero.interview.data.domain.use_case.account_record.CountAccountRecordUseCase
 import com.xero.interview.data.domain.use_case.bank_account.GetAllBankAccountsUseCase
 import com.xero.interview.data.domain.use_case.bank_account.GetSumBankAccountUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,13 +16,14 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val backAccountsUseCase: GetAllBankAccountsUseCase,
-    private val getSumBankAccountUseCase: GetSumBankAccountUseCase
+    private val getSumBankAccountUseCase: GetSumBankAccountUseCase,
+    private val countAccountRecordUseCase: CountAccountRecordUseCase
 ) : ViewModel() {
     var totalAmount: MutableStateFlow<Double> = MutableStateFlow(0.0)
         private set
 
-    var bankAccounts: MutableStateFlow<List<BankAccount>> =
-        MutableStateFlow<List<BankAccount>>(emptyList())
+    var bankAccounts: MutableStateFlow<List<BankAccountModel>> =
+        MutableStateFlow<List<BankAccountModel>>(emptyList())
         private set
 
     init {
@@ -30,10 +32,15 @@ class HomeViewModel @Inject constructor(
 
     private fun loadBankAccounts() {
         viewModelScope.launch(Dispatchers.IO) {
-            totalAmount.value = getSumBankAccountUseCase()
-
+            val _accounts = mutableListOf<BankAccountModel>()
             backAccountsUseCase().collectLatest {
-                bankAccounts.value = it
+                it.forEach { acc ->
+                    val _count = countAccountRecordUseCase(acc.id)
+                    _accounts.add(BankAccountModel(acc, _count))
+                }
+
+                bankAccounts.value = _accounts
+                totalAmount.value = getSumBankAccountUseCase.invoke()
             }
         }
     }

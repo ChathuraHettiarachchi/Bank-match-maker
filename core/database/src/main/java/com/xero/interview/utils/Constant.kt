@@ -128,8 +128,8 @@ object Constant {
 
     val transactionRecords = _accRecordSplits.mapIndexed { index, i ->
         TransactionRecord(
-            id = (i + 1).toLong(),
-            name = "Transaction record ${i + 1}",
+            id = (index + 1).toLong(),
+            name = "Transaction record ${index + 1}",
             date = "20 Oct 2023",
             type = "Payment",
             amount = i.toDouble(),
