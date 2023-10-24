@@ -8,7 +8,11 @@ import com.xero.interview.common.models.TransactionRecordModel
 import com.xero.interview.data.domain.model.AccountRecord
 import com.xero.interview.data.domain.model.TransactionRecord
 import com.xero.interview.data.domain.use_case.account_record.FindAccountRecordUseCase
+import com.xero.interview.data.domain.use_case.account_record.UpdateAccountRecordUseCase
+import com.xero.interview.data.domain.use_case.bank_account.FindBankAccountUseCase
+import com.xero.interview.data.domain.use_case.bank_account.UpdateBankAccountUseCase
 import com.xero.interview.data.domain.use_case.transaction_record.GetAllTransactionRecordsUseCase
+import com.xero.interview.data.domain.use_case.transaction_record.UpdateTransactionRecordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,8 +25,14 @@ import kotlin.math.sign
 @HiltViewModel
 class FindMatchViewModel @Inject constructor(
     private val allTransactionRecordsUseCase: GetAllTransactionRecordsUseCase,
-    private val findAccountRecordUseCase: FindAccountRecordUseCase
+    private val findAccountRecordUseCase: FindAccountRecordUseCase,
+    private val updateAccountRecordUseCase: UpdateAccountRecordUseCase,
+    private val updateTransactionRecordUseCase: UpdateTransactionRecordUseCase,
+    private val updateBankAccountUseCase: UpdateBankAccountUseCase,
+    private val findBankAccountUseCase: FindBankAccountUseCase
 ) : ViewModel() {
+
+    var initialAmountToMatch = 0.0
 
     var amountToMatch = MutableStateFlow(0.0)
         private set
@@ -35,6 +45,31 @@ class FindMatchViewModel @Inject constructor(
 
     var errorData = MutableStateFlow<ErrorModel>(ErrorModel())
         private set
+
+    fun updateDbRecords() {
+        val selectedTransactions: List<TransactionRecord> =
+            records.value.filter { it.isChecked }.map { it.record }
+        val selectedIds = selectedTransactions.map { it.id }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            selectedTransactions.forEach { it ->
+                val _transaction = it.copy(recordId = account.value!!.id)
+                updateTransactionRecordUseCase(_transaction)
+            }
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            val _account = account.value!!
+            updateAccountRecordUseCase(_account.copy(transactionList = selectedIds))
+        }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            val _bankAccount = findBankAccountUseCase(account.value!!.bankAccountId)
+            val _bankAccountUpdated =
+                _bankAccount.copy(appBalance = (_bankAccount.appBalance + account.value!!.amount))
+            updateBankAccountUseCase(_bankAccount)
+        }
+    }
 
     fun loadTransactions(bankAccountId: Long, accountId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
