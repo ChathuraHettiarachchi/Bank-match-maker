@@ -126,7 +126,8 @@ fun PreviewBankAccount() {
             R.drawable.ic_001,
             "Amana Bank NZ",
             92345.12,
-            23425.00
+            23425.00,
+            "20 Oct 2023"
         ), infoText = "Test subTitle"
     )
 }

@@ -13,6 +13,9 @@ interface AccountRecordDao {
     @Query("SELECT * FROM AccountRecord WHERE bankAccountId = :bankAccountId")
     fun allRecords(bankAccountId: Long): Flow<List<AccountRecord>>
 
+    @Query("SELECT * FROM AccountRecord WHERE id = :id LIMIT 1")
+    fun findAccountRecord(id: Long): AccountRecord
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRecord(record: AccountRecord): Long
 

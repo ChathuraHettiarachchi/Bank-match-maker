@@ -46,14 +46,13 @@ fun AccountRecordCell(
     val color = if (record.amount > 0) moneyInColor else moneyOutColor
     val icon = if (record.amount > 0) XeroIcons.In else XeroIcons.Out
 
-    Column {
+    Column(modifier = Modifier.clickable { onClick(record.bankAccountId, record.id) }) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .background(color = whiteColor)
                 .padding(defaultMargin)
-                .clickable { onClick(record.bankAccountId, record.id) }
             //TODO
         ) {
             Row(

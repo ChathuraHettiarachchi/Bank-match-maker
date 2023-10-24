@@ -19,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.xero.interview.data.domain.model.BankAccount
 import com.xero.interview.design.component.actionbar.MainAppBar
 import com.xero.interview.design.component.cell.AccountSummary
 import com.xero.interview.design.component.cell.BankAccountCell
@@ -101,12 +100,6 @@ fun HomeScreen(
         }
     }
 }
-
-val tempAccounts = listOf<BankAccount>(
-    BankAccount(12, 1, "Amana Bank NZ", 92345.12, 23425.00),
-    BankAccount(22, 1, "Amana Bank NZ", 92345.12, 92345.12),
-    BankAccount(424, 1, "Amana Bank NZ", 92345.12, 23425.00)
-)
 
 @Preview
 @Composable

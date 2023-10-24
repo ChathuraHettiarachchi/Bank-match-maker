@@ -5,6 +5,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface BankAccountRepo {
     fun allBankAccounts(): Flow<List<BankAccount>>
+    suspend fun findBankAccount(id: Long): BankAccount
+    suspend fun getSum(): Double
     suspend fun insertAccount(account: BankAccount): Long
     suspend fun updateAccount(account: BankAccount)
 }

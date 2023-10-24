@@ -7,9 +7,9 @@ import com.xero.interview.data.domain.model.TransactionRecord
 object Constant {
     // temp data for database init
     val bankAccounts = listOf<BankAccount>(
-        BankAccount(100, 1, "Amana Bank NZ", -10000.00, -20000.00),
-        BankAccount(200, 2, "Common Wealth Bank", 6850.00, 6850.00),
-        BankAccount(300, 3, "Bank of Ceylon", 92345.12, 92345.12),
+        BankAccount(100, 1, "Amana Bank NZ", -10000.00, -20000.00, "20 Oct 2023"),
+        BankAccount(200, 2, "Common Wealth Bank", 6850.00, 6850.00, "20 Oct 2023"),
+        BankAccount(300, 3, "Bank of Ceylon", 92345.12, 92345.12, "20 Oct 2023"),
     )
 
     val accountRecords = listOf<AccountRecord>(
