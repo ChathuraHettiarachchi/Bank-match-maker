@@ -9,7 +9,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -46,18 +45,19 @@ fun FindMatchScreen(
     val amountToMatch by viewModel.amountToMatch.collectAsState()
     val errorData by viewModel.errorData.collectAsState()
 
-    DisposableEffect(disposeUpdate) {
-        onDispose {
-            viewModel.updateDbRecords()
-        }
-    }
+//    DisposableEffect() {
+//        onDispose {
+//            viewModel.updateDbRecords()
+//        }
+//    }
 
     fun onCellClick(record: TransactionRecord, isChecked: Boolean) {
         viewModel.selectTransaction(record, isChecked)
     }
 
     fun onBackClickTrigger() {
-        disposeUpdate = true
+        //disposeUpdate = true
+        viewModel.updateDbRecords()
         onBackClick.invoke()
     }
 

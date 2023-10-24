@@ -8,6 +8,7 @@ import com.xero.interview.data.domain.use_case.bank_account.GetAllBankAccountsUs
 import com.xero.interview.data.domain.use_case.bank_account.GetSumBankAccountUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -35,6 +36,7 @@ class HomeViewModel @Inject constructor(
             val _accounts = mutableListOf<BankAccountModel>()
             backAccountsUseCase().collectLatest {
                 it.forEach { acc ->
+                    delay(100)
                     val _count = countAccountRecordUseCase(acc.id)
                     _accounts.add(BankAccountModel(acc, _count))
                 }

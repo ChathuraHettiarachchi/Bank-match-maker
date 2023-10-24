@@ -50,23 +50,33 @@ class FindMatchViewModel @Inject constructor(
         val selectedTransactions: List<TransactionRecord> =
             records.value.filter { it.isChecked }.map { it.record }
         val selectedIds = selectedTransactions.map { it.id }
+        val selectedTotal = selectedTransactions.map { it.amount }.reduce { a, v -> a + v }
 
         viewModelScope.launch(Dispatchers.IO) {
             selectedTransactions.forEach { it ->
-                val _transaction = it.copy(recordId = account.value!!.id)
+                val _transaction = it
+                _transaction.apply {
+                    recordId = account.value!!.id
+                }
                 updateTransactionRecordUseCase(_transaction)
             }
         }
 
         viewModelScope.launch(Dispatchers.IO) {
             val _account = account.value!!
-            updateAccountRecordUseCase(_account.copy(transactionList = selectedIds))
+            _account.apply {
+                amount -= selectedTotal
+                transactionList = selectedIds
+                isMatched = (amountToMatch.value == 0.0)
+            }
+            updateAccountRecordUseCase(_account)
         }
 
         viewModelScope.launch(Dispatchers.IO) {
             val _bankAccount = findBankAccountUseCase(account.value!!.bankAccountId)
-            val _bankAccountUpdated =
-                _bankAccount.copy(appBalance = (_bankAccount.appBalance + account.value!!.amount))
+            _bankAccount.apply {
+                appBalance = (_bankAccount.appBalance + selectedTotal)
+            }
             updateBankAccountUseCase(_bankAccount)
         }
     }
