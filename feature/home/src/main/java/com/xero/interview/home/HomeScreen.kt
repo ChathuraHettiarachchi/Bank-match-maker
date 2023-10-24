@@ -1,15 +1,14 @@
 package com.xero.interview.home
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material3.Card
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -26,8 +25,11 @@ import com.xero.interview.design.component.text.TitleText
 import com.xero.interview.design.component.utils.HSpace
 import com.xero.interview.design.theme.blackColor
 import com.xero.interview.design.theme.defaultMargin
+import com.xero.interview.design.theme.defaultRadius
 import com.xero.interview.design.theme.halfMargin
+import com.xero.interview.design.theme.separatorColor
 import com.xero.interview.design.theme.titleText
+import com.xero.interview.design.theme.whiteColor
 import com.xero.interview.home.viewmodel.HomeViewModel
 
 @Composable
@@ -52,47 +54,60 @@ fun HomeScreen(
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
+        color = whiteColor
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             MainAppBar("Xero Accounting")
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(defaultMargin)
+                    .padding(start = defaultMargin, end = defaultMargin)
             ) {
-                AccountSummary(
-                    title = "All accounts",
-                    subTitle = "-- last updated on 12 Dec 2023 --",
-                    amount = totalAmount
-                )
-                HSpace(defaultMargin)
-                Card() {
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        HSpace(halfMargin)
-                        TitleText(
-                            text = "Bank accounts",
-                            style = titleText.copy(color = blackColor)
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    verticalArrangement = Arrangement.spacedBy(
+                        1.dp
+                    )
+                ) {
+                    item {
+                        HSpace(defaultMargin)
+                        AccountSummary(
+                            title = "All accounts",
+                            subTitle = "-- last updated on 12 Dec 2023 --",
+                            amount = totalAmount
                         )
-                        HSpace(halfMargin)
-                        LazyColumn(
+                        HSpace(defaultMargin)
+                    }
+                    item {
+                        Column(
                             modifier = Modifier
-                                .weight(1f),
-                            verticalArrangement = Arrangement.spacedBy(
-                                1.dp
-                            )
+                                .fillMaxSize()
+                                .background(
+                                    shape = RoundedCornerShape(
+                                        topStart = defaultRadius,
+                                        topEnd = defaultRadius
+                                    ), color = separatorColor
+                                ),
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            items(bankAccounts) { data ->
-                                BankAccountCell(
-                                    account = data.bankAccount,
-                                    infoText = data.accountRecordCount,
-                                    onClick = { navigateToRecords(it) }
-                                )
-                            }
+                            HSpace(halfMargin)
+                            TitleText(
+                                text = "Bank accounts",
+                                style = titleText.copy(color = blackColor)
+                            )
+                            HSpace(halfMargin)
                         }
+                    }
+                    items(bankAccounts) { data ->
+                        BankAccountCell(
+                            account = data.bankAccount,
+                            infoText = data.accountRecordCount,
+                            onClick = { navigateToRecords(it) }
+                        )
+                    }
+                    item {
+                        HSpace(defaultMargin)
                     }
                 }
             }

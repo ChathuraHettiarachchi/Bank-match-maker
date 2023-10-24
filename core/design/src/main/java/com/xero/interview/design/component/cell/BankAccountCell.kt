@@ -34,6 +34,7 @@ import com.xero.interview.design.component.utils.HSpace
 import com.xero.interview.design.component.utils.WSpace
 import com.xero.interview.design.theme.amountMediumSize
 import com.xero.interview.design.theme.amountText
+import com.xero.interview.design.theme.background
 import com.xero.interview.design.theme.blackColor
 import com.xero.interview.design.theme.defaultMargin
 import com.xero.interview.design.theme.greenColor
@@ -57,7 +58,7 @@ fun BankAccountCell(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = whiteColor)
+                .background(color = background)
                 .padding(defaultMargin),
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {

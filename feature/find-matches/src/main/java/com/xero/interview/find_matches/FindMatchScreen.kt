@@ -7,14 +7,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.xero.interview.data.domain.model.AccountRecord
 import com.xero.interview.data.domain.model.TransactionRecord
 import com.xero.interview.design.component.actionbar.ActionAppBar
 import com.xero.interview.design.component.cell.TransactionCell
@@ -27,22 +29,27 @@ fun FindMatchRoute(
     viewModel: FindMatchViewModel = hiltViewModel()
 ) {
     viewModel.loadTransactions(bankAccountId = bankAccountId, accountId = accountId)
-
-    val account by viewModel.account.collectAsState()
-    val data by viewModel.records.collectAsState()
-
-    FindMatchScreen(bankAccountId, account, data, onBackClick = onBackClick)
+    FindMatchScreen(onBackClick = onBackClick)
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FindMatchScreen(
-    bankAccountId: Long,
-    account: AccountRecord?,
-    data: List<TransactionRecord>,
     viewModel: FindMatchViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
 ) {
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
+
+    val account by viewModel.account.collectAsState()
+    val data by viewModel.records.collectAsState()
+    val amountToMatch by viewModel.amountToMatch.collectAsState()
+    val errorData by viewModel.errorData.collectAsState()
+
+    fun onCellClick(record: TransactionRecord, isChecked: Boolean) {
+        viewModel.selectTransaction(record, isChecked)
+    }
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -61,12 +68,21 @@ fun FindMatchScreen(
                     modifier = Modifier.fillMaxWidth(),
                 ) {
                     stickyHeader {
-                        MatchesIndicator(account?.amount ?: 0.0)
+                        MatchesIndicator(amountToMatch ?: 0.0)
                     }
-                    items(data) { record ->
-                        TransactionCell(record = record)
+                    items(data) { i ->
+                        TransactionCell(
+                            record = i.record,
+                            isMatched = i.isMatch,
+                            isChecked = i.isChecked,
+                            isEnabled = i.isEnable,
+                            onClick = ::onCellClick
+                        )
                     }
                 }
+            }
+            if (errorData.isError) {
+                
             }
         }
     }
