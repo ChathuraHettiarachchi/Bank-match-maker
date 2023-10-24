@@ -7,6 +7,7 @@ val blackColor = Color(0xFF000000)
 val infoColor = Color(0xFFB3B3B3)
 val infoColorDark = Color(0xFFA3A3A3)
 val separatorColor = Color(0xFFDDDDDD)
+val background = Color(0xFFEBEBEB)
 
 val primary100 = Color(0xFFC5CAE9)
 val primary200 = Color(0xFF9FA8DA)
