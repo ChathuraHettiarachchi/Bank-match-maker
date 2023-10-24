@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.xero.interview.data.domain.model.TransactionRecord
 import com.xero.interview.design.component.actionbar.ActionAppBar
 import com.xero.interview.design.component.cell.TransactionCell
 import com.xero.interview.design.component.indicator.MatchesIndicator
@@ -37,6 +38,10 @@ fun FindMatchScreen(
     val account by viewModel.account.collectAsState()
     val data by viewModel.records.collectAsState()
     val amountToMatch by viewModel.amountToMatch.collectAsState()
+
+    fun onCellClick(record: TransactionRecord) {
+        viewModel.selectTransaction(record)
+    }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -62,7 +67,8 @@ fun FindMatchScreen(
                         TransactionCell(
                             record = i.record,
                             isMatched = i.isMatch,
-                            isChecked = i.isChecked
+                            isChecked = i.isChecked,
+                            onClick = ::onCellClick
                         )
                     }
                 }

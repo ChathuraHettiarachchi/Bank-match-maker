@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.xero.interview.common.helpers.isAMatch
 import com.xero.interview.common.models.TransactionRecordModel
 import com.xero.interview.data.domain.model.AccountRecord
+import com.xero.interview.data.domain.model.TransactionRecord
 import com.xero.interview.data.domain.use_case.account_record.FindAccountRecordUseCase
 import com.xero.interview.data.domain.use_case.transaction_record.GetAllTransactionRecordsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -44,6 +45,16 @@ class FindMatchViewModel @Inject constructor(
                         isMatch = i.isAMatch(account.value!!)
                     )
                 }
+            }
+        }
+    }
+
+    fun selectTransaction(record: TransactionRecord) {
+        records.value = records.value.map { item ->
+            if (item.record.id == record.id) {
+                item.copy(isChecked = !item.isChecked)
+            } else {
+                item
             }
         }
     }

@@ -38,19 +38,17 @@ fun TransactionCell(
     record: TransactionRecord,
     isMatched: Boolean = false,
     isChecked: Boolean = false,
-    onClick: () -> Unit = {}
+    onClick: (TransactionRecord) -> Unit = {}
 ) {
-    var _ischecked by remember { mutableStateOf(isChecked) }
-
-    fun onCellClick() {
-        _ischecked = !_ischecked
-        onClick.invoke()
-    }
+//    fun onCellClick() {
+//        _ischecked = !_ischecked
+//        onClick.invoke()
+//    }
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onCellClick() }
+            .clickable { onClick(record) }
     ) {
 
         Column(
@@ -69,7 +67,7 @@ fun TransactionCell(
                     .fillMaxWidth()
             ) {
                 Checkbox(
-                    checked = _ischecked,
+                    checked = isChecked,
                     onCheckedChange = {},
                     enabled = false,
                     colors = CheckboxDefaults.colors(
