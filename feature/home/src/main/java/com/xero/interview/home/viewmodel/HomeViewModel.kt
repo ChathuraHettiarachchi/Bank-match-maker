@@ -20,11 +20,10 @@ class HomeViewModel @Inject constructor(
     private val getSumBankAccountUseCase: GetSumBankAccountUseCase,
     private val countAccountRecordUseCase: CountAccountRecordUseCase
 ) : ViewModel() {
-    var totalAmount: MutableStateFlow<Double> = MutableStateFlow(0.0)
+    var totalAmount = MutableStateFlow(0.0)
         private set
 
-    var bankAccounts: MutableStateFlow<List<BankAccountModel>> =
-        MutableStateFlow<List<BankAccountModel>>(emptyList())
+    var bankAccounts = MutableStateFlow<List<BankAccountModel>>(emptyList())
         private set
 
     init {
@@ -33,16 +32,21 @@ class HomeViewModel @Inject constructor(
 
     private fun loadBankAccounts() {
         viewModelScope.launch(Dispatchers.IO) {
-            val _accounts = mutableListOf<BankAccountModel>()
+            //delay(100)
             backAccountsUseCase().collectLatest {
+                val _accounts = mutableListOf<BankAccountModel>()
+
                 it.forEach { acc ->
                     delay(100)
                     val _count = countAccountRecordUseCase(acc.id)
                     _accounts.add(BankAccountModel(acc, _count))
                 }
 
+                bankAccounts.value = emptyList()
                 bankAccounts.value = _accounts
-                totalAmount.value = getSumBankAccountUseCase.invoke()
+
+                delay(100)
+                totalAmount.value = getSumBankAccountUseCase() ?: 0.0
             }
         }
     }

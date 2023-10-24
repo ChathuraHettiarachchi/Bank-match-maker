@@ -33,9 +33,7 @@ import com.xero.interview.design.theme.whiteColor
 import com.xero.interview.home.viewmodel.HomeViewModel
 
 @Composable
-fun HomeRoute(
-    navigateToAccountRecords: (Long) -> Unit
-) {
+fun HomeRoute(navigateToAccountRecords: (Long) -> Unit) {
     HomeScreen(navigateToAccountRecords)
 }
 

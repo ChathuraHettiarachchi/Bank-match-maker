@@ -11,9 +11,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -38,8 +35,6 @@ fun FindMatchScreen(
     viewModel: FindMatchViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
 ) {
-    var disposeUpdate by remember { mutableStateOf(false) }
-
     val account by viewModel.account.collectAsState()
     val data by viewModel.records.collectAsState()
     val amountToMatch by viewModel.amountToMatch.collectAsState()
@@ -56,7 +51,6 @@ fun FindMatchScreen(
     }
 
     fun onBackClickTrigger() {
-        //disposeUpdate = true
         viewModel.updateDbRecords()
         onBackClick.invoke()
     }
