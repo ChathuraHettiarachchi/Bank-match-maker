@@ -61,7 +61,7 @@ fun HomeScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(defaultMargin)
+                    .padding(start = defaultMargin, end = defaultMargin)
             ) {
                 LazyColumn(
                     modifier = Modifier
@@ -71,6 +71,7 @@ fun HomeScreen(
                     )
                 ) {
                     item {
+                        HSpace(defaultMargin)
                         AccountSummary(
                             title = "All accounts",
                             subTitle = "-- last updated on 12 Dec 2023 --",
@@ -104,6 +105,9 @@ fun HomeScreen(
                             infoText = data.accountRecordCount,
                             onClick = { navigateToRecords(it) }
                         )
+                    }
+                    item {
+                        HSpace(defaultMargin)
                     }
                 }
             }

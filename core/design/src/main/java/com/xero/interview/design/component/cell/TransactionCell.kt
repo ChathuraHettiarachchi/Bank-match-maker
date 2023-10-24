@@ -11,6 +11,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,9 +40,17 @@ fun TransactionCell(
     isChecked: Boolean = false,
     onClick: () -> Unit = {}
 ) {
+    var _ischecked by remember { mutableStateOf(isChecked) }
+
+    fun onCellClick() {
+        _ischecked = !_ischecked
+        onClick.invoke()
+    }
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .clickable { onCellClick() }
     ) {
 
         Column(
@@ -51,14 +63,13 @@ fun TransactionCell(
                     bottom = defaultMargin,
                     start = halfMargin
                 )
-                .clickable { onClick }
         ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
                 Checkbox(
-                    checked = isChecked,
+                    checked = _ischecked,
                     onCheckedChange = {},
                     enabled = false,
                     colors = CheckboxDefaults.colors(

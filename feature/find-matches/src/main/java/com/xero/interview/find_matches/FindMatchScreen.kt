@@ -14,9 +14,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.xero.interview.common.helpers.isAMatch
-import com.xero.interview.data.domain.model.AccountRecord
-import com.xero.interview.data.domain.model.TransactionRecord
 import com.xero.interview.design.component.actionbar.ActionAppBar
 import com.xero.interview.design.component.cell.TransactionCell
 import com.xero.interview.design.component.indicator.MatchesIndicator
@@ -28,22 +25,19 @@ fun FindMatchRoute(
     viewModel: FindMatchViewModel = hiltViewModel()
 ) {
     viewModel.loadTransactions(bankAccountId = bankAccountId, accountId = accountId)
-
-    val account by viewModel.account.collectAsState()
-    val data by viewModel.records.collectAsState()
-
-    FindMatchScreen(bankAccountId, account, data, onBackClick = onBackClick)
+    FindMatchScreen(onBackClick = onBackClick)
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FindMatchScreen(
-    bankAccountId: Long,
-    account: AccountRecord?,
-    data: List<TransactionRecord>,
     viewModel: FindMatchViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
 ) {
+    val account by viewModel.account.collectAsState()
+    val data by viewModel.records.collectAsState()
+    val amountToMatch by viewModel.amountToMatch.collectAsState()
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -62,10 +56,14 @@ fun FindMatchScreen(
                     modifier = Modifier.fillMaxWidth(),
                 ) {
                     stickyHeader {
-                        MatchesIndicator(account?.amount ?: 0.0)
+                        MatchesIndicator(amountToMatch ?: 0.0)
                     }
-                    items(data) { record ->
-                        TransactionCell(record = record, isMatched = record.isAMatch(account!!))
+                    items(data) { i ->
+                        TransactionCell(
+                            record = i.record,
+                            isMatched = i.isMatch,
+                            isChecked = i.isChecked
+                        )
                     }
                 }
             }
