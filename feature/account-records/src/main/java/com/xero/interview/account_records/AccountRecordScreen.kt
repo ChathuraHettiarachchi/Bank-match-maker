@@ -25,7 +25,7 @@ fun AccountRecordRoute(
     viewModel: AccountRecordViewModel = hiltViewModel(),
     navigateToFindMatches: (Long, Long) -> Unit
 ) {
-    
+
     viewModel.loadAccountRecords(bankAccountId)
     val bankAccount by viewModel.bankAccount.collectAsState()
 
@@ -43,7 +43,7 @@ fun AccountRecordScreen(
     onBackClick: () -> Unit,
     navigateToFindMatches: (Long, Long) -> Unit
 ) {
-    val records by viewModel.records.collectAsState()
+    val records by viewModel.matchedRecords.collectAsState()
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -64,7 +64,8 @@ fun AccountRecordScreen(
                 ) {
                     items(records) { record ->
                         AccountRecordCell(
-                            record = record,
+                            record = record.account,
+                            matchedRecord = record.matchedTransactions,
                             onClick = navigateToFindMatches
                         )
                     }

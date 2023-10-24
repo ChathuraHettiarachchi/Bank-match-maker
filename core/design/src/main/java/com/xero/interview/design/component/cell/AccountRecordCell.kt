@@ -20,6 +20,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.xero.interview.data.domain.model.AccountRecord
+import com.xero.interview.data.domain.model.TransactionRecord
 import com.xero.interview.design.component.indicator.MatchFoundIndicator
 import com.xero.interview.design.component.text.AmountText
 import com.xero.interview.design.component.text.InfoText
@@ -40,7 +41,7 @@ import com.xero.interview.design.theme.whiteColor
 @Composable
 fun AccountRecordCell(
     record: AccountRecord,
-    matchedRecord: Any? = null,
+    matchedRecord: List<TransactionRecord>? = null,
     onClick: (Long, Long) -> Unit = { p1, p2 -> }
 ) {
     val color = if (record.amount > 0) moneyInColor else moneyOutColor
@@ -53,7 +54,6 @@ fun AccountRecordCell(
                 .wrapContentHeight()
                 .background(color = whiteColor)
                 .padding(defaultMargin)
-            //TODO
         ) {
             Row(
                 modifier = Modifier
@@ -86,13 +86,13 @@ fun AccountRecordCell(
                     AmountText(amount = record.amount, style = amountText)
                 }
             }
-            if (matchedRecord != null) {
+            if (!matchedRecord.isNullOrEmpty()) {
                 HSpace()
                 MatchFoundIndicator(
-                    title = record.name,
-                    subTitle = record.date,
-                    amount = record.amount,
-                    type = "N/A",
+                    title = matchedRecord[0].name,
+                    subTitle = matchedRecord[0].date,
+                    amount = matchedRecord[0].amount,
+                    type = matchedRecord[0].type,
                     isFullUI = true
                 )
             }
@@ -129,6 +129,6 @@ fun PreviewAccountRecordOutWithIndicatorCell() {
         AccountRecord((0..999).random().toLong(), "Test name", "12 Dec 2023", 50012.23, 12)
     AccountRecordCell(
         record = data,
-        matchedRecord = "a"
+        matchedRecord = null
     )
 }
