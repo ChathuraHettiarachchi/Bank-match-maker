@@ -10,6 +10,7 @@ data class AccountRecord(
     var name: String,
     var date: String,
     var amount: Double,
-    var isMoneyIn: Boolean = false,
-    var bankAccountId: Long
+    var bankAccountId: Long,
+    var transactionList: List<Long>? = listOf(),
+    var isMatched: Boolean = false
 )

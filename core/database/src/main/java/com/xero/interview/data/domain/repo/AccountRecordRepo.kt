@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface AccountRecordRepo {
     fun allRecords(bankAccountId: Long): Flow<List<AccountRecord>>
+    fun findAccountRecord(id: Long): AccountRecord
     suspend fun insertRecord(record: AccountRecord): Long
     suspend fun updateRecord(record: AccountRecord)
 

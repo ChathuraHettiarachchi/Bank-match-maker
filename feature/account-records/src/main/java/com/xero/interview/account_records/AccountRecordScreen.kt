@@ -1,6 +1,5 @@
 package com.xero.interview.account_records
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,11 +8,12 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.xero.interview.account_records.viewmodel.AccountRecordViewModel
-import com.xero.interview.data.domain.model.AccountRecord
 import com.xero.interview.data.domain.model.BankAccount
 import com.xero.interview.design.component.actionbar.ActionAppBar
 import com.xero.interview.design.component.cell.AccountRecordCell
@@ -22,33 +22,29 @@ import com.xero.interview.design.component.cell.AccountRecordCell
 fun AccountRecordRoute(
     bankAccountId: Long,
     onBackClick: () -> Unit,
+    viewModel: AccountRecordViewModel = hiltViewModel(),
     navigateToFindMatches: (Long, Long) -> Unit
 ) {
-    val bankAccount = BankAccount((0..999).random().toLong(), 1, "Amana Bank NZ", 92345.12, 23425.00)
-    val data: MutableList<AccountRecord> = mutableListOf();
-
-    repeat((0..10).count()) {
-        data.add(AccountRecord((0..999).random().toLong(), "Test name", "12 Dec 2023", 50012.23, false, bankAccountId))
-    }
+    
+    viewModel.loadAccountRecords(bankAccountId)
+    val bankAccount by viewModel.bankAccount.collectAsState()
 
     AccountRecordScreen(
         bankAccount = bankAccount,
-        data = data,
         onBackClick = onBackClick,
         navigateToFindMatches = navigateToFindMatches
     )
-
-    Log.e("--->", bankAccountId.toString())
 }
 
 @Composable
 fun AccountRecordScreen(
-    bankAccount: BankAccount,
-    data: List<AccountRecord>,
+    bankAccount: BankAccount?,
     viewModel: AccountRecordViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     navigateToFindMatches: (Long, Long) -> Unit
 ) {
+    val records by viewModel.records.collectAsState()
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -56,7 +52,7 @@ fun AccountRecordScreen(
         Column(modifier = Modifier.fillMaxSize()) {
             ActionAppBar(
                 text = "Account records",
-                subTitle = bankAccount.name,
+                subTitle = bankAccount?.name ?: "",
                 onNavigationClick = onBackClick
             )
             Column(
@@ -66,7 +62,7 @@ fun AccountRecordScreen(
                 LazyColumn(
                     modifier = Modifier.fillMaxWidth(),
                 ) {
-                    items(data) { record ->
+                    items(records) { record ->
                         AccountRecordCell(
                             record = record,
                             onClick = navigateToFindMatches
@@ -81,5 +77,5 @@ fun AccountRecordScreen(
 @Preview
 @Composable
 fun PreviewAccountRecordScreen() {
-    AccountRecordRoute(1, {}, { p1, p2 -> })
+    AccountRecordRoute(1, {}, hiltViewModel(), { p1, p2 -> })
 }

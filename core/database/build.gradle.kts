@@ -53,6 +53,9 @@ dependencies {
     //hilt
     implementation("com.google.dagger:hilt-android:2.44")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
+
+    // gson
+    implementation("com.google.code.gson:gson:2.10.1")
 }
 // Allow references to generated code
 kapt {

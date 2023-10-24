@@ -11,6 +11,14 @@ class BankAccountRepoImpl @Inject constructor(private val dao: BankAccountDao) :
         return dao.allBankAccounts()
     }
 
+    override suspend fun findBankAccount(id: Long): BankAccount {
+        return dao.findBankAccount(id)
+    }
+
+    override suspend fun getSum(): Double {
+        return dao.getSum()
+    }
+
     override suspend fun insertAccount(account: BankAccount): Long {
         return dao.insertAccount(account)
     }

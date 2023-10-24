@@ -13,6 +13,12 @@ interface BankAccountDao {
     @Query("SELECT * FROM BankAccount")
     fun allBankAccounts(): Flow<List<BankAccount>>
 
+    @Query("SELECT * FROM BankAccount WHERE id = :id LIMIT 1")
+    suspend fun findBankAccount(id: Long): BankAccount
+
+    @Query("SELECT SUM(appBalance) FROM BankAccount")
+    suspend fun getSum(): Double
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAccount(account: BankAccount): Long
 

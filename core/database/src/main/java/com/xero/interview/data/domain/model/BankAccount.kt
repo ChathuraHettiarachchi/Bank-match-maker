@@ -10,5 +10,6 @@ data class BankAccount(
     var icon: Int,
     var name: String,
     var appBalance: Double,
-    var statementBalance: Double
+    var statementBalance: Double,
+    var updatedAt: String,
 )
