@@ -22,3 +22,8 @@ fun List<AccountRecord>.matchMake(transactionRecords: List<TransactionRecord>): 
 
     return results
 }
+
+fun TransactionRecord.isAMatch(accountRecord: AccountRecord): Boolean {
+    // for now I'm considering the amount
+    return this.amount == accountRecord.amount
+}

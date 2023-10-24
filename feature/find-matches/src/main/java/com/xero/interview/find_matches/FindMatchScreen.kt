@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.xero.interview.common.helpers.isAMatch
 import com.xero.interview.data.domain.model.AccountRecord
 import com.xero.interview.data.domain.model.TransactionRecord
 import com.xero.interview.design.component.actionbar.ActionAppBar
@@ -64,7 +65,7 @@ fun FindMatchScreen(
                         MatchesIndicator(account?.amount ?: 0.0)
                     }
                     items(data) { record ->
-                        TransactionCell(record = record)
+                        TransactionCell(record = record, isMatched = record.isAMatch(account!!))
                     }
                 }
             }

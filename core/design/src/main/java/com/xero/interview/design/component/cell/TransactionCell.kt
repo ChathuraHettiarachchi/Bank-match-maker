@@ -84,14 +84,16 @@ fun TransactionCell(
                 }
             }
             if (isMatched) {
-                HSpace()
-                MatchFoundIndicator(
-                    title = "",
-                    subTitle = "",
-                    amount = 0.0,
-                    type = "",
-                    isFullUI = false
-                )
+                Column(modifier = Modifier.padding(start = halfMargin)) {
+                    HSpace()
+                    MatchFoundIndicator(
+                        title = "",
+                        subTitle = "",
+                        amount = 0.0,
+                        type = "",
+                        isFullUI = false
+                    )
+                }
             }
         }
         WSeparator()
