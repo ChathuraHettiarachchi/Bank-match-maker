@@ -26,6 +26,7 @@ import com.xero.interview.design.component.text.TitleText
 import com.xero.interview.design.component.utils.HSpace
 import com.xero.interview.design.component.utils.WSeparator
 import com.xero.interview.design.theme.amountText
+import com.xero.interview.design.theme.background
 import com.xero.interview.design.theme.blackColor
 import com.xero.interview.design.theme.defaultMargin
 import com.xero.interview.design.theme.halfMargin
@@ -38,23 +39,19 @@ fun TransactionCell(
     record: TransactionRecord,
     isMatched: Boolean = false,
     isChecked: Boolean = false,
-    onClick: (TransactionRecord) -> Unit = {}
+    isEnabled: Boolean = true,
+    onClick: (TransactionRecord,Boolean) -> Unit = {p1,p2->}
 ) {
-//    fun onCellClick() {
-//        _ischecked = !_ischecked
-//        onClick.invoke()
-//    }
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onClick(record) }
+            .clickable { onClick(record, isChecked) }
     ) {
 
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = whiteColor)
+                .background(color = if (isEnabled) whiteColor else background)
                 .padding(
                     end = defaultMargin,
                     top = defaultMargin,
