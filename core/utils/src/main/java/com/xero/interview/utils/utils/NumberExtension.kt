@@ -12,7 +12,7 @@ fun Double?.toPriceFormat(): String {
     val decimalFormat = numberFormat as DecimalFormat
 
     // Set the number of decimal places
-    decimalFormat.applyPattern("#,###.##")
-    
+    decimalFormat.applyPattern("#,##0.00")
+
     return decimalFormat.format(this)
 }
