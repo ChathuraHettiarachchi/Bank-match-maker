@@ -42,7 +42,6 @@ class HomeViewModel @Inject constructor(
                     _accounts.add(BankAccountModel(acc, _count))
                 }
 
-                bankAccounts.value = emptyList()
                 bankAccounts.value = _accounts
 
                 delay(100)
