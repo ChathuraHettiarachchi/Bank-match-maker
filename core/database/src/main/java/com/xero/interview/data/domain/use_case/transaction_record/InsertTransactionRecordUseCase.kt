@@ -4,8 +4,8 @@ import com.xero.interview.data.domain.model.TransactionRecord
 import com.xero.interview.data.domain.repo.TransactionRecordRepo
 import javax.inject.Inject
 
-class InsertTransactionRecordUseCase @Inject constructor(private val repo: TransactionRecordRepo) {
-    suspend operator fun invoke(record: TransactionRecord): Long {
+open class InsertTransactionRecordUseCase @Inject constructor(private val repo: TransactionRecordRepo) {
+    open suspend operator fun invoke(record: TransactionRecord): Long {
         return repo.insertRecord(record)
     }
 }
