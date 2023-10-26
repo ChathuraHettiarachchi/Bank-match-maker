@@ -33,14 +33,96 @@ class FindMatchViewModelTest {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
-    private lateinit var viewModel: FindMatchViewModel
-
     private val allTransactionRecordsUseCase: GetAllTransactionRecordsUseCase = mock()
     private val findAccountRecordUseCase: FindAccountRecordUseCase = mock()
     private val updateAccountRecordUseCase: UpdateAccountRecordUseCase = mock()
     private val updateTransactionRecordUseCase: UpdateTransactionRecordUseCase = mock()
     private val updateBankAccountUseCase: UpdateBankAccountUseCase = mock()
     private val findBankAccountUseCase: FindBankAccountUseCase = mock()
+    private val viewModel by lazy {
+        FindMatchViewModel(
+            allTransactionRecordsUseCase,
+            findAccountRecordUseCase,
+            updateAccountRecordUseCase,
+            updateTransactionRecordUseCase,
+            updateBankAccountUseCase,
+            findBankAccountUseCase
+        )
+    }
+
+
+    @Before()
+    fun setup() {
+        viewModel
+        `when`(allTransactionRecordsUseCase(100)).thenReturn(flowOf(transactionList))
+        `when`(findAccountRecordUseCase(1)).thenReturn(accountRecord)
+    }
+
+    @Test
+    fun `find transactions loading with data and set isMatch value to the items matching the account amount`() =
+        runTest {
+            val result = transactionList.map { i ->
+                TransactionRecordModel(
+                    record = i,
+                    isChecked = false,
+                    isEnable = true,
+                    isMatch = i.isAMatch(accountRecord)
+                )
+            }
+
+            viewModel.records.test {
+                viewModel.loadTransactions(100, 1)
+
+                val emission = awaitItem()
+                assertThat(emission).isEmpty()
+
+                val emission1 = awaitItem()
+                assertThat(emission1.size).isEqualTo(result.size)
+                assertThat(emission1[0].record.amount).isEqualTo(accountRecord.amount)
+                assertThat(emission1[0].isMatch).isTrue()
+                cancel()
+            }
+        }
+
+    @Test
+    fun `check amount to match is set on transaction loading`() = runTest {
+        val result = transactionList.map { i ->
+            TransactionRecordModel(
+                record = i,
+                isChecked = false,
+                isEnable = true,
+                isMatch = i.isAMatch(accountRecord)
+            )
+        }
+        viewModel.loadTransactions(100, 1)
+        viewModel.amountToMatch.test {
+            val emission1 = awaitItem()
+            assertThat(emission1).isEqualTo(100.0)
+        }
+    }
+
+
+    @Test
+    fun `reduce value to match based on user transaction selection`() = runTest {
+        val result = transactionList.map { i ->
+            TransactionRecordModel(
+                record = i,
+                isChecked = false,
+                isEnable = true,
+                isMatch = i.isAMatch(accountRecord)
+            )
+        }
+        viewModel.loadTransactions(100, 1)
+
+        viewModel.amountToMatch.test {
+            val emission1 = awaitItem()
+            assertThat(emission1).isEqualTo(100.0)
+
+            viewModel.selectTransaction(record = transactionList[0], false)
+            val emission2 = awaitItem()
+            assertThat(emission2).isEqualTo(0.0)
+        }
+    }
 
     private val transactionList = listOf(
         TransactionRecord(
@@ -70,91 +152,4 @@ class FindMatchViewModelTest {
         amount = 100.00,
         bankAccountId = 100
     )
-
-    @Before()
-    fun setup() {
-        viewModel = FindMatchViewModel(
-            allTransactionRecordsUseCase,
-            findAccountRecordUseCase,
-            updateAccountRecordUseCase,
-            updateTransactionRecordUseCase,
-            updateBankAccountUseCase,
-            findBankAccountUseCase
-        )
-    }
-
-    @Test
-    fun `find transactions loading with data and set isMatch value to the items matching the account amount`() =
-        runTest {
-            `when`(allTransactionRecordsUseCase(100)).thenReturn(flowOf(transactionList))
-            `when`(findAccountRecordUseCase(1)).thenReturn(accountRecord)
-
-            val result = transactionList.map { i ->
-                TransactionRecordModel(
-                    record = i,
-                    isChecked = false,
-                    isEnable = true,
-                    isMatch = i.isAMatch(accountRecord)
-                )
-            }
-
-            viewModel.records.test {
-                viewModel.loadTransactions(100, 1)
-
-                val emission = awaitItem()
-                assertThat(emission).isEmpty()
-                
-                val emission1 = awaitItem()
-                assertThat(emission1.size).isEqualTo(result.size)
-                assertThat(emission1[0].record.amount).isEqualTo(accountRecord.amount)
-                assertThat(emission1[0].isMatch).isTrue()
-                cancel()
-            }
-        }
-
-    @Test
-    fun `check amount to match is set on transaction loading`() = runTest {
-        `when`(allTransactionRecordsUseCase(100)).thenReturn(flowOf(transactionList))
-        `when`(findAccountRecordUseCase(1)).thenReturn(accountRecord)
-
-        val result = transactionList.map { i ->
-            TransactionRecordModel(
-                record = i,
-                isChecked = false,
-                isEnable = true,
-                isMatch = i.isAMatch(accountRecord)
-            )
-        }
-        viewModel.loadTransactions(100, 1)
-        viewModel.amountToMatch.test {
-            val emission1 = awaitItem()
-            assertThat(emission1).isEqualTo(100.0)
-        }
-    }
-
-
-    @Test
-    fun `reduce value to match based on user transaction selection`() = runTest {
-        `when`(allTransactionRecordsUseCase(100)).thenReturn(flowOf(transactionList))
-        `when`(findAccountRecordUseCase(1)).thenReturn(accountRecord)
-
-        val result = transactionList.map { i ->
-            TransactionRecordModel(
-                record = i,
-                isChecked = false,
-                isEnable = true,
-                isMatch = i.isAMatch(accountRecord)
-            )
-        }
-        viewModel.loadTransactions(100, 1)
-
-        viewModel.amountToMatch.test {
-            val emission1 = awaitItem()
-            assertThat(emission1).isEqualTo(100.0)
-
-            viewModel.selectTransaction(record = transactionList[0], false)
-            val emission2 = awaitItem()
-            assertThat(emission2).isEqualTo(0.0)
-        }
-    }
 }
