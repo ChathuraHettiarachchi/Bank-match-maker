@@ -13,6 +13,9 @@ import com.xero.interview.design.theme.greenColor
 import com.xero.interview.design.theme.moneyOutColor
 import com.xero.interview.design.theme.primary900
 
+/**
+ * FindMatchIndicator will used to displace a anchor on a view
+ */
 @Composable
 fun FindMatchIndicator() {
     Canvas(modifier = Modifier

@@ -10,6 +10,12 @@ import com.xero.interview.design.theme.amountLargeText
 import com.xero.interview.design.theme.titleSize
 import com.xero.interview.utils.utils.toPriceFormat
 
+/**
+ * AmountText can use to display text with some preset values, amount is formatted to
+ * 00,000.00 format
+ * @param amount will carry the amount value to the text view
+ * @param style use to update the textStyle values
+ */
 @Composable
 fun AmountText(amount: Double, style: TextStyle = amountLargeText) {
     Text(text = amount.toPriceFormat(), style = style, maxLines = 1)

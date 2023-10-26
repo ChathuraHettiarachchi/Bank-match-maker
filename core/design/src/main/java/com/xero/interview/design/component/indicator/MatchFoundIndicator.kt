@@ -31,6 +31,14 @@ import com.xero.interview.design.theme.subTitleSize
 import com.xero.interview.design.theme.subTitleText
 import com.xero.interview.design.theme.titleText
 
+/**
+ * MatchFoundIndicator will be used to display matched content in the screen
+ * @param title change title text
+ * @param subTitle change the sub text
+ * @param amount
+ * @param type can use to display the type value
+ * @param isFullUI this is boolean and can toggle between full and other small view
+ */
 @Composable
 fun MatchFoundIndicator(
     title: String,

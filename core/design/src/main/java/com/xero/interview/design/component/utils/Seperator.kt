@@ -15,6 +15,11 @@ import com.xero.interview.design.theme.defaultMargin
 import com.xero.interview.design.theme.halfMargin
 import com.xero.interview.design.theme.separatorColor
 
+/**
+ * Horizontal separator line, width is set to fill
+ * @param sidePadding padding on sides
+ * @param color color of the separator
+ */
 @Composable
 fun WSeparator(sidePadding: Dp = defaultMargin, color: Color = separatorColor) {
     Divider(
@@ -27,6 +32,11 @@ fun WSeparator(sidePadding: Dp = defaultMargin, color: Color = separatorColor) {
     )
 }
 
+/**
+ * Vertical separator line
+ * @param sidePadding padding on sides, height set to fill
+ * @param color color of the separator
+ */
 @Composable
 fun HSeparator(sidePadding: Dp = halfMargin, color: Color = separatorColor) {
     Divider(

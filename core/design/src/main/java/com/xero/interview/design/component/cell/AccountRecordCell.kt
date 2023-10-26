@@ -38,6 +38,13 @@ import com.xero.interview.design.theme.moneyOutColor
 import com.xero.interview.design.theme.titleText
 import com.xero.interview.design.theme.whiteColor
 
+/**
+ * AccountRecordCell display the account record values
+ * @param record is the record that gonna populate in the cell
+ * @param matchedRecord if there are matched records use this, then it will show the match
+ * found component attached to the cell
+ * @param onClick handle click, will take bank and account id
+ */
 @Composable
 fun AccountRecordCell(
     record: AccountRecord,

@@ -34,6 +34,15 @@ import com.xero.interview.design.theme.primary900
 import com.xero.interview.design.theme.titleText
 import com.xero.interview.design.theme.whiteColor
 
+/**
+ * TransactionCell is a selectable cell that display values of transaction record
+ * but can be reuse to display any
+ * @param record transaction record
+ * @param isMatched is the record is matched with account info
+ * @param isChecked is the check box selected
+ * @param isEnabled status of the cell
+ * @param onClick onClick action caller, will pass record and status
+ */
 @Composable
 fun TransactionCell(
     record: TransactionRecord,

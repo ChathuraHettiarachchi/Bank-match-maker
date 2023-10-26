@@ -17,6 +17,13 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * AccountRecordViewModel will load all account records that needs to matched in the back account.
+ * it will show already available matched in the first show
+ * @param allAccountRecordsUseCase use to get all account records from db based on bank id
+ * @param findBankAccountUseCase use to get the bank account from id
+ * @param allTransactionRecordsUseCase get all transactions from bank id
+ */
 @HiltViewModel
 class AccountRecordViewModel @Inject constructor(
     private val allAccountRecordsUseCase: GetAllAccountRecordsUseCase,
@@ -35,6 +42,11 @@ class AccountRecordViewModel @Inject constructor(
     var matchedRecords = MutableStateFlow<List<AccountRecordModel>>(emptyList())
         private set
 
+    /**
+     * load all account records, on the fly it will match with transaction records with
+     * matching amount
+     * @param bankAccountId bank account id
+     */
     fun loadAccountRecords(bankAccountId: Long) {
         _bankAccountId = bankAccountId
 

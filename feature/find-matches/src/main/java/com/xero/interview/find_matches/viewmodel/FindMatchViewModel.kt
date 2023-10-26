@@ -22,6 +22,14 @@ import javax.inject.Inject
 import kotlin.math.absoluteValue
 import kotlin.math.sign
 
+/**
+ * @param allTransactionRecordsUseCase use to get all transactions matched to bank id
+ * @param findAccountRecordUseCase use to find single account record from db
+ * @param updateAccountRecordUseCase use to update the account record info
+ * @param updateTransactionRecordUseCase update transaction record info
+ * @param updateBankAccountUseCase update bank account info
+ * @param findBankAccountUseCase find a single bank account from db
+ */
 @HiltViewModel
 class FindMatchViewModel @Inject constructor(
     private val allTransactionRecordsUseCase: GetAllTransactionRecordsUseCase,
@@ -84,6 +92,11 @@ class FindMatchViewModel @Inject constructor(
         }
     }
 
+    /**
+     * load all transactions by matching data
+     * @param bankAccountId
+     * @param accountId
+     */
     fun loadTransactions(bankAccountId: Long, accountId: Long) {
         viewModelScope.launch(Dispatchers.IO) {
             val accountRecord = findAccountRecordUseCase(accountId)
@@ -103,6 +116,11 @@ class FindMatchViewModel @Inject constructor(
         }
     }
 
+    /**
+     * this triggers on user selection. will take the selected transaction record and is it checked
+     * @param record is selected transaction record
+     * @param isChecked status whether it's checked or not
+     */
     fun selectTransaction(record: TransactionRecord, isChecked: Boolean) {
         val _amountToMatch = (amountToMatch.value)
         val recAmount = if (record.amount < 0) record.amount else record.amount.absoluteValue
@@ -136,6 +154,11 @@ class FindMatchViewModel @Inject constructor(
         }
     }
 
+    /**
+     * updated selected and other records based on the matched value is met or not
+     * @param record selected record
+     * @param isEnabled status weather it's enabled
+     */
     private fun updateRecords(
         record: TransactionRecord,
         isEnabled: Boolean

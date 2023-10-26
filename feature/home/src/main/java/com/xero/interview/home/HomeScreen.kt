@@ -32,11 +32,20 @@ import com.xero.interview.design.theme.titleText
 import com.xero.interview.design.theme.whiteColor
 import com.xero.interview.home.viewmodel.HomeViewModel
 
+/**
+ * Composable called when routing,
+ * @param navigateToAccountRecords will take accountId
+ */
 @Composable
 fun HomeRoute(navigateToAccountRecords: (Long) -> Unit) {
     HomeScreen(navigateToAccountRecords)
 }
 
+/**
+ * Composable called when routing,
+ * @param navigateToAccountRecords will take accountId
+ * @param viewModel get injected
+ */
 @Composable
 fun HomeScreen(
     navigateToAccountRecords: (Long) -> Unit,

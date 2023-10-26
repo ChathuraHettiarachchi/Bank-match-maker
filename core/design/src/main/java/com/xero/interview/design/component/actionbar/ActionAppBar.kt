@@ -24,6 +24,12 @@ import com.xero.interview.design.component.utils.HSpace
 import com.xero.interview.design.icon.XeroIcons
 import com.xero.interview.design.theme.*
 
+/**
+ * ActionAppBar with left action
+ * @param text is the title
+ * @param subTitle is there is description you need to attach, can use this
+ * @param onNavigationClick handle the action
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ActionAppBar(text: String, subTitle: String?, onNavigationClick: () -> Unit = {}) {

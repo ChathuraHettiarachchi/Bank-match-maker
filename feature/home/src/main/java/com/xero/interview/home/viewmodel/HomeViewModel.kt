@@ -13,6 +13,13 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * HomeViewModel, the state holder for home screen
+ * @param backAccountsUseCase to get all back accounts
+ * @param getSumBankAccountUseCase give sum of all account
+ * @param countAccountRecordUseCase count need to match records
+ * @param dispatcher, injected by DI
+ */
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val backAccountsUseCase: GetAllBankAccountsUseCase,
@@ -31,6 +38,9 @@ class HomeViewModel @Inject constructor(
         loadBankAccounts()
     }
 
+    /**
+     * Will populate both total amount and all the bank accounts
+     */
     fun loadBankAccounts() {
         val _accounts = mutableListOf<BankAccountModel>()
 

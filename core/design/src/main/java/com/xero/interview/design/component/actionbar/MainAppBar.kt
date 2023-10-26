@@ -12,6 +12,9 @@ import androidx.compose.ui.unit.dp
 import com.xero.interview.design.component.text.TitleText
 import com.xero.interview.design.theme.*
 
+/**
+ * Main app bar with title
+ */
 @Composable
 fun MainAppBar(text: String){
     Box(modifier = Modifier

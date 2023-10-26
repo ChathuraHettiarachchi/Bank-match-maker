@@ -4,6 +4,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 
+// set of text styles used in the app
 val titleText = TextStyle(
     fontSize = titleSize,
     fontWeight = FontWeight.SemiBold,
