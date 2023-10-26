@@ -21,12 +21,17 @@ import com.xero.interview.design.theme.infoText
 import com.xero.interview.design.theme.primary900
 import com.xero.interview.design.theme.whiteColor
 
+/**
+ * AccountSummary will used to display summary of all the accounts and based on app balance
+ * @param title title text
+ * @param subTitle info text
+ * @param amount amount to display
+ */
 @Composable
 fun AccountSummary(
     title: String,
     subTitle: String,
-    amount: Double,
-    lastUpdated: String = "dd MMM yyyy"
+    amount: Double
 ) {
     Card(
         modifier = Modifier

@@ -6,6 +6,7 @@ import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.ArrowForward
 import androidx.compose.ui.graphics.vector.ImageVector
 
+// icon list
 object XeroIcons {
     val Back = Icons.Outlined.ArrowBack
     val Bank = Icons.Outlined.AccountBox

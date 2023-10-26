@@ -24,6 +24,10 @@ import com.xero.interview.design.theme.halfRadius
 import com.xero.interview.design.theme.whiteColor
 import com.xero.interview.utils.utils.toPriceFormat
 
+/**
+ * MatchesIndicator will used to display the amount to match
+ * @param amount will be the amount to match
+ */
 @Composable
 fun MatchesIndicator(amount: Double) {
     Box(

@@ -5,7 +5,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-
+// default radius, margin and sizes for the app
 const val defaultMarginValue: Int = 16
 const val halfMarginValue: Int = defaultMarginValue / 2
 const val quarterMarginValue: Int = defaultMarginValue / 4

@@ -2,6 +2,7 @@ package com.xero.interview.design.theme
 
 import androidx.compose.ui.graphics.Color
 
+// colors used in the application
 val whiteColor = Color(0xFFFFFFFF)
 val blackColor = Color(0xFF000000)
 val infoColor = Color(0xFFB3B3B3)

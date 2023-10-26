@@ -45,6 +45,12 @@ import com.xero.interview.design.theme.subTitleText
 import com.xero.interview.design.theme.titleText
 import com.xero.interview.design.theme.whiteColor
 
+/**
+ * BankAccountCell used to display bank account information
+ * @param account account to display
+ * @param infoText small text
+ * @param onClick action trigger
+ */
 @Composable
 fun BankAccountCell(
     account: BankAccount,
