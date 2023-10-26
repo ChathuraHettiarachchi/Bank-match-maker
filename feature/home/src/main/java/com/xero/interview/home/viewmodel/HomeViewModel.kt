@@ -43,9 +43,9 @@ class HomeViewModel @Inject constructor(
      */
     fun loadBankAccounts() {
         val _accounts = mutableListOf<BankAccountModel>()
-
         viewModelScope.launch(dispatcher) {
             backAccountsUseCase().collectLatest {
+                _accounts.clear()
                 it.forEach { acc ->
                     //delay(100)
                     val _count = countAccountRecordUseCase(acc.id.toInt())
