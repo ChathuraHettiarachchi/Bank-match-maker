@@ -8,6 +8,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.xero.interview.design.theme.defaultMargin
@@ -20,7 +21,8 @@ fun WSeparator(sidePadding: Dp = defaultMargin, color: Color = separatorColor) {
         modifier = Modifier
             .padding(start = sidePadding, end = sidePadding)
             .fillMaxWidth()
-            .width(1.dp),
+            .width(1.dp)
+            .testTag("WSeparator"),
         color = color
     )
 }
@@ -31,7 +33,8 @@ fun HSeparator(sidePadding: Dp = halfMargin, color: Color = separatorColor) {
         modifier = Modifier
             .padding(top = sidePadding, bottom = sidePadding)
             .fillMaxHeight()
-            .width(1.dp),
+            .width(1.dp)
+            .testTag("HSeparator"),
         thickness = 1.dp,
         color = color
     )

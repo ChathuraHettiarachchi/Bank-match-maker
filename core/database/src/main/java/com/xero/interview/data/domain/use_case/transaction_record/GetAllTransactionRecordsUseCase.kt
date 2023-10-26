@@ -6,8 +6,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class GetAllTransactionRecordsUseCase @Inject constructor(private val repo: TransactionRecordRepo) {
-    operator fun invoke(bankAccountId: Long): Flow<List<TransactionRecord>> = flow {
+open class GetAllTransactionRecordsUseCase @Inject constructor(private val repo: TransactionRecordRepo) {
+    open operator fun invoke(bankAccountId: Long): Flow<List<TransactionRecord>> = flow {
         repo.allRecords(bankAccountId).collect() {
             emit(it)
         }

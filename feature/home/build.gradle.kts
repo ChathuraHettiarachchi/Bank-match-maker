@@ -61,11 +61,15 @@ dependencies {
 
     //hilt
     implementation("com.google.dagger:hilt-android:2.46")
+    implementation("androidx.test:runner:1.5.2")
     kapt("com.google.dagger:hilt-android-compiler:2.44")
 
     testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    testImplementation("app.cash.turbine:turbine:1.0.0")
+    testImplementation("com.google.truth:truth:1.1.3")
+    testImplementation("android.arch.core:core-testing:1.1.1")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0")
 }
 
 kapt {
