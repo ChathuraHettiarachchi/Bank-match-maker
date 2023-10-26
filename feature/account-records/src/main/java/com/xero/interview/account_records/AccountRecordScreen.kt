@@ -18,6 +18,13 @@ import com.xero.interview.data.domain.model.BankAccount
 import com.xero.interview.design.component.actionbar.ActionAppBar
 import com.xero.interview.design.component.cell.AccountRecordCell
 
+/**
+ * Route triggered by the navigation for AccountRecords screen
+ * @param bankAccountId bacnk account id
+ * @param onBackClick handle back navigation
+ * @param viewModel will inject by di
+ * @param navigateToFindMatches will take bank and account ids
+ */
 @Composable
 fun AccountRecordRoute(
     bankAccountId: Long,

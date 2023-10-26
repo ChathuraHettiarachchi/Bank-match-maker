@@ -20,6 +20,13 @@ import com.xero.interview.design.component.cell.TransactionCell
 import com.xero.interview.design.component.indicator.MatchesIndicator
 import com.xero.interview.find_matches.viewmodel.FindMatchViewModel
 
+/**
+ * Use to display the find a match screen from routes
+ * @param bankAccountId use to get the back account id
+ * @param onBackClick handle back navigation
+ * @param accountId use to get account id
+ * @param viewModel will inject by di
+ */
 @Composable
 fun FindMatchRoute(
     bankAccountId: Long, accountId: Long, onBackClick: () -> Unit,
@@ -29,6 +36,11 @@ fun FindMatchRoute(
     FindMatchScreen(onBackClick = onBackClick)
 }
 
+/**
+ * UI for find a match screen
+ * @param viewModel will inject by di
+ * @param onBackClick to handle back click
+ */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FindMatchScreen(
@@ -39,12 +51,6 @@ fun FindMatchScreen(
     val data by viewModel.records.collectAsState()
     val amountToMatch by viewModel.amountToMatch.collectAsState()
     val errorData by viewModel.errorData.collectAsState()
-
-//    DisposableEffect() {
-//        onDispose {
-//            viewModel.updateDbRecords()
-//        }
-//    }
 
     fun onCellClick(record: TransactionRecord, isChecked: Boolean) {
         viewModel.selectTransaction(record, isChecked)
