@@ -4,6 +4,7 @@ import com.xero.interview.data.domain.model.AccountRecord
 import com.xero.interview.data.domain.model.BankAccount
 import com.xero.interview.data.domain.model.TransactionRecord
 
+// constants and db initial data
 object Constant {
     // temp data for database init
     val bankAccounts = listOf<BankAccount>(
