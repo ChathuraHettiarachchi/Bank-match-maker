@@ -7,8 +7,7 @@ import com.xero.interview.data.domain.use_case.account_record.CountAccountRecord
 import com.xero.interview.data.domain.use_case.bank_account.GetAllBankAccountsUseCase
 import com.xero.interview.data.domain.use_case.bank_account.GetSumBankAccountUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -18,8 +17,10 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val backAccountsUseCase: GetAllBankAccountsUseCase,
     private val getSumBankAccountUseCase: GetSumBankAccountUseCase,
-    private val countAccountRecordUseCase: CountAccountRecordUseCase
+    private val countAccountRecordUseCase: CountAccountRecordUseCase,
+    private val dispatcher: CoroutineDispatcher,
 ) : ViewModel() {
+
     var totalAmount = MutableStateFlow(0.0)
         private set
 
@@ -30,21 +31,17 @@ class HomeViewModel @Inject constructor(
         loadBankAccounts()
     }
 
-    private fun loadBankAccounts() {
-        viewModelScope.launch(Dispatchers.IO) {
-            //delay(100)
-            backAccountsUseCase().collectLatest {
-                val _accounts = mutableListOf<BankAccountModel>()
+    fun loadBankAccounts() {
+        val _accounts = mutableListOf<BankAccountModel>()
 
+        viewModelScope.launch(dispatcher) {
+            backAccountsUseCase().collectLatest {
                 it.forEach { acc ->
-                    delay(100)
-                    val _count = countAccountRecordUseCase(acc.id)
+                    //delay(100)
+                    val _count = countAccountRecordUseCase(acc.id.toInt())
                     _accounts.add(BankAccountModel(acc, _count))
                 }
-
                 bankAccounts.value = _accounts
-
-                delay(100)
                 totalAmount.value = getSumBankAccountUseCase() ?: 0.0
             }
         }
